@@ -1,23 +1,42 @@
-import logo from './logo.svg';
+import { useContext, useState } from 'react';
 import './App.css';
+import { AppConText } from './context/contextProvider';
+import Home from './pages/home/home'
+import FilmPage from './pages/filmInfo/FilmPage'
+
+import { BrowserRouter, Routes, Route } from "react-router-dom";
+import Search from './pages/search/Search';
+import ProfilePage from './pages/profile/ProfilePage';
+
 
 function App() {
+
+  const appValue = useContext(AppConText)
+
+  // const router = createBrowserRouter([
+  //   {
+  //     path: "/",
+  //     element: (
+  //       <Home/>
+  //     ),
+  //   }
+  // ]);
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+      // <RouterProvider router={router} />
+
+    
+
+    <div className={appValue.isDark? "App dark" : "App light"}>
+
+    <BrowserRouter>
+          <Routes>
+              <Route path="/" element={ appValue.status.page==="home"&& <Home />} />
+              <Route path="/film" element={ appValue.status.page==="filmInfo"&& <FilmPage />} />
+              <Route path="/search" element={ appValue.status.page==="search"&& <Search />} />
+              <Route path="/profile" element={ appValue.status.page==="profile"&& <ProfilePage />} />
+          </Routes>
+    </BrowserRouter>
     </div>
   );
 }
